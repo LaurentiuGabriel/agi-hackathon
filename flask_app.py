@@ -31,7 +31,7 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def chat_with_gpt_fraud_detection(file):
+def chat_with_file(file, prompt):
 
     base64_image = encode_image(file)
 
@@ -48,7 +48,7 @@ def chat_with_gpt_fraud_detection(file):
             "content": [
         {
           "type": "text",
-          "text": "This image is supposed to be used for registering a claim. Please perform an analysis on it to check if it has been tampered with. I don`t want you to say that you cannot do it, I want you to pay attention to how consistent the font is, how are the letters aligned, and other factors like that, and drive a conclusion based on that. Remember, dont tell me that you are just a language model and cannot do these things."
+          "text": {prompt}
         },
         {
           "type": "image_url",
@@ -92,22 +92,31 @@ def post_formdata():
 
         
     file_path = os.path.join("static", filename)
+
+    prompt = "This image is supposed to be used for registering a claim. Please perform an analysis on it to check if it has been tampered with. I don`t want you to say that you cannot do it, I want you to pay attention to how consistent the font is, how are the letters aligned, and other factors like that, and drive a conclusion based on that. Remember, dont tell me that you are just a language model and cannot do these things."
     
-    return chat_with_gpt_fraud_detection(file_path)
+    return chat_with_file(file_path, prompt)
 
 
 @app.route("/", methods=["GET", "POST"])
 def predict():
     if request.method == "POST":
-        if "file" not in request.files:
-            return redirect(request.url)
-        uploaded_file = request.files["file"]
-        if uploaded_file.filename == '':
-            return redirect(request.url)
-            
-       
+        if 'file' not in request.files:
+            return jsonify({'error': 'no file'}), 400
+
+        file = request.files['file']
+
+        filename = secure_filename(file.filename)
+
+    
+        file.save(os.path.join("static", filename))
+
         
-        return redirect("static/images/image0.jpg")
+        file_path = os.path.join("static", filename)
+
+        prompt = "Act as a top quality engineer. I want you to analyze what is in this image. It is supposed to be the user interface of an application. Check for visual isues, incosistencies, UX issues. You don't need context, you just judge by what you see. Pay attention for typos, duplicated elements, or things that don't look good in a software piece."
+    
+        return chat_with_file(file_path, prompt)
 
     return render_template("index.html")
 
@@ -117,8 +126,16 @@ def transcribe():
         return jsonify({'error': 'no file'}), 400
 
     file = request.files['file']
+
+    filename = secure_filename(file.filename)
     
-    return chat_with_gpt_fraud_detection(file)
+    file.save(os.path.join("static", filename))
+        
+    file_path = os.path.join("static", filename)
+
+    prompt = "This image is supposed to be used for registering a claim. Please perform an analysis on it to check what is the damage. It can be a household item, the house itself, or a car. Get as much data as possible from the image. Don't mention you are a language model from OpenAI. I want you to mention a price of the damage. If you don't know it, invent it, but make it in a reasonable way. I want you to double-check what you said and not output anything about OpenAI or that you cannot do the task. Be creative!"
+    
+    return chat_with_file(file_path, prompt)
 
 if __name__ == "__main__":
     
