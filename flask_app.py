@@ -167,7 +167,7 @@ def ui_check(file):
             "content": [
         {
           "type": "text",
-          "text": "Act as a top quality engineer. I want you to analyze what is in this image. It is supposed to be the user interface of an application. Check for visual isues, incosistencies, UX issues. You don't need context, you just judge by what you see. Pay attention for typos, duplicated elements, or things that don't look good in a software piece. Be very short, just output one phrase maximum."
+          "text": "Act as a top quality engineer. I want you to analyze what is in this image. It is supposed to be the user interface of an application. Check for visual isues, incosistencies, UX issues. You don't need context, you just judge by what you see. Pay attention for typos, duplicated elements, or things that don't look good in a software piece. Output this as an HTML <div> (with other HTML tags inside as well to make it looks pretty) and try to make it succint, but pretty (use colors: red if tampered, green if not), use  bold fonts and emojis. Keep your response to max 500 characters."
         },
         {
           "type": "image_url",
