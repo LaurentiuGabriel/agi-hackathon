@@ -209,6 +209,10 @@
             </script>
 
 
+  <!-- JavaScript -->
+  
+
+
 
             <section class="features section">
                 <div class="container">
@@ -234,15 +238,17 @@
                                             damage of the car or house for which the claim is raised for.</p>
                                     </div>
                                     <div class="cta-cta">
-                                        <form class="form-signin" method=post enctype=multipart/form-data>
-                                            <h1 class="h3 mb-5 font-weight-normal">Upload any image for damage detection
+                                        <form id="claims" class="form-signin" method="POST"
+                                            enctype="multipart/form-data">
+                                            <h1 class="h3 mb-5 font-weight-normal">Upload any image for claims
+                                                assessment
                                             </h1>
                                             <input type="file" name="file" class="form-control-file" id="inputfile"
                                                 style="display: block; width: 100%; padding: 12px 20px; margin: 8px 0; box-sizing: border-box; border: none; border-radius: 4px; background-color: #3CBC8D; color: white;">
-
                                             <br />
-                                            <button class="button button-primary" style="display: block; width: 100%;"
-                                                type="submit">Submit</a>
+
+                                            <button class="button button-primary" type="submit"
+                                                style="display: block; width: 100%;">Submit</button>
                                         </form>
                                     </div>
                                 </div>
@@ -251,7 +257,15 @@
                         </div>
                     </div>
                 </div>
+
+
+            
+
+
+
             </section>
+
+
 
 
             <section class="features section">
@@ -276,17 +290,21 @@
                                         <p class="text-sm mb-0" style="width: 100%;">Upload a photo of the user
                                             interface of your software.</p>
                                     </div>
+
                                     <div class="cta-cta">
                                         <form id="voiceForm" class="form-signin" method="POST"
                                             enctype="multipart/form-data">
-
-                                            <input type="file" name="file" class="form-control-file" id="inputAudio"
+                                            <h1 class="h3 mb-5 font-weight-normal">
+                                            </h1>
+                                            <input type="file" name="file" class="form-control-file" id="inputfile"
                                                 style="display: block; width: 100%; padding: 12px 20px; margin: 8px 0; box-sizing: border-box; border: none; border-radius: 4px; background-color: #3CBC8D; color: white;">
                                             <br />
-                                            <button class="button button-primary" style="display: block; width: 100%;"
-                                                type="button" onclick="audioForm()">Submit</button>
+
+                                            <button class="button button-primary" type="submit"
+                                                style="display: block; width: 100%;">Submit</button>
                                         </form>
                                     </div>
+
                                 </div>
                             </div>
 
@@ -296,19 +314,13 @@
             </section>
 
             <script>
-                function audioForm() {
-                    // Get the form and input file element
-                    const form = document.getElementById('voiceForm');
-                    const inputFile = document.getElementById('inputAudio');
-
-                    // Create FormData object and append the file to it
-                    const formData = new FormData();
-                    formData.append('file', inputFile.files[0]);
-
-                    // Make the API call using fetch
+                document.getElementById('voiceForm').addEventListener('submit', function (event) {
+                    event.preventDefault(); // prevent the form from submitting the traditional way
+                    var formData = new FormData(this); // create a new FormData object and pass in 'this' (the form) as the argument
+            
                     fetch('/transcribe', {
                         method: 'POST',
-                        body: formData,
+                        body: formData
                     })
                         .then(function (response) {
                             return response.json(); // parse the response as JSON
@@ -316,31 +328,31 @@
                         .then(function (data) {
                             // Assuming 'data' is the response array from the server
                             let formattedData = '';
-
+            
+                            console.log("reached this point")
+            
                             data.forEach((item, index) => {
                                 if (item === '') {
-                                    // Add a paragraph break for empty strings
-                                    formattedData += '<p></p>';
-                                } else if (item.match(/^\d+\.\s\*\*(.+)\*\*:/)) {
-                                    // Format list items with bold titles
-                                    formattedData += `<p><strong>${item}</strong></p>`;
+                                    // Add a line break for empty strings
+                                    formattedData += '<br>';
                                 } else {
-                                    // For other strings, just convert newlines to <br>
-                                    formattedData += `<p>${item.replace(/\n/g, '<br>')}</p>`;
+                                    // Wrap non-empty strings in paragraph tags
+                                    formattedData += `<p>${item}</p>`;
                                 }
                             });
-
-                            // Use innerHTML to set the content
+            
+                            console.log(formattedData);
+            
                             document.getElementById('responseModalBody').innerHTML = formattedData;
-
+            
                             // Display the modal
                             $('#responseModal').modal('show');
-
+            
                         })
                         .catch(function (error) {
                             console.error('Error:', error);
                         });
-                }
+                });
             </script>
         </main>
 
@@ -404,6 +416,46 @@
             </div>
         </footer>
     </div>
+
+    <script>
+        document.getElementById('claims').addEventListener('submit', function (event) {
+            event.preventDefault(); // prevent the form from submitting the traditional way
+            var formData = new FormData(this); // create a new FormData object and pass in 'this' (the form) as the argument
+
+            fetch('/', {
+                method: 'POST',
+                body: formData
+            })
+                .then(function (response) {
+                    return response.json(); // parse the response as JSON
+                })
+                .then(function (data) {
+                    // Assuming 'data' is the response array from the server
+                    let formattedData = '';
+
+                    data.forEach((item, index) => {
+                        if (item === '') {
+                            // Add a line break for empty strings
+                            formattedData += '<br>';
+                        } else {
+                            // Wrap non-empty strings in paragraph tags
+                            formattedData += `<p>${item}</p>`;
+                        }
+                    });
+
+                    console.log(formattedData);
+
+                    document.getElementById('responseModalBody').innerHTML = formattedData;
+
+                    // Display the modal
+                    $('#responseModal').modal('show');
+
+                })
+                .catch(function (error) {
+                    console.error('Error:', error);
+                });
+        });
+    </script>
 
     <script src="static/script.js"></script>
     <script src="//code.jquery.com/jquery-3.3.1.slim.min.js"
