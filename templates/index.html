@@ -124,7 +124,7 @@
                                 <input type="file" name="file" class="form-control-file" id="inputfile"
                                     style="display: block; width: 100%; padding: 12px 20px; margin: 8px 0; box-sizing: border-box; border: none; border-radius: 4px; background-color: #3CBC8D; color: white;">
                                 <br />
-                                <button class="button button-primary submit-button" type="submit"
+                                <button class="button button-primary submit-button" id="submit-form-fraud" type="submit"
                                     style="display: block; width: 100%;">Submit</button>
                             </form>
                         </div>
@@ -178,7 +178,7 @@
                                     style="display: block; width: 100%; padding: 12px 20px; margin: 8px 0; box-sizing: border-box; border: none; border-radius: 4px; background-color: #3CBC8D; color: white;">
                                 <br />
 
-                                <button class="button button-primary submit-button" type="submit"
+                                <button class="button button-primary submit-button" id="submit-form-claims" type="submit"
                                     style="display: block; width: 100%;">Submit</button>
                             </form>
                         </div>
@@ -208,7 +208,7 @@
                                         style="display: block; width: 100%; padding: 12px 20px; margin: 8px 0; box-sizing: border-box; border: none; border-radius: 4px; background-color: #3CBC8D; color: white;">
                                     <br />
 
-                                    <button class="button button-primary submit-button" type="submit"
+                                    <button class="button button-primary submit-button" id="submit-form-ui" type="submit"
                                         style="display: block; width: 100%;">Submit</button>
                                 </form>
                             </div>
@@ -287,7 +287,7 @@
     <script>
         document.getElementById('fraudForm').addEventListener('submit', function (event) {
             event.preventDefault();
-            changeSubmitButtonText("Loading ...");
+            changeSubmitButtonText("submit-form-fraud", "Loading ...");
             var formData = new FormData(this);
 
             fetch('/fraud', {
@@ -305,7 +305,7 @@
 
                     // Display the modal
                     $('#responseModal').modal('show');
-                    changeSubmitButtonText("Submit")
+                    changeSubmitButtonText("submit-form-fraud", "Submit")
                 })
                 .catch(function (error) {
                     console.error('Error:', error);
@@ -318,7 +318,7 @@
     <script>
         document.getElementById('claimsForm').addEventListener('submit', function (event) {
             event.preventDefault();
-            changeSubmitButtonText("Loading ...");
+            changeSubmitButtonText("submit-form-claims", "Loading ...");
             var formData = new FormData(this);
 
             fetch('/claims', {
@@ -335,7 +335,7 @@
 
                     // Display the modal
                     $('#responseModal').modal('show');
-                    changeSubmitButtonText("Submit")
+                    changeSubmitButtonText("submit-form-claims", "Submit")
                 })
                 .catch(function (error) {
                     console.error('Error:', error);
@@ -346,8 +346,9 @@
     <!-- UI TESTER -->
     <script>
         document.getElementById('uiTestForm').addEventListener('submit', function (event) {
-            event.preventDefault(); // prevent the form from submitting the traditional way
-            var formData = new FormData(this); // create a new FormData object and pass in 'this' (the form) as the argument
+            event.preventDefault();
+            changeSubmitButtonText("submit-form-ui", "Loading ...")
+            var formData = new FormData(this);
 
             fetch('/ui-check', {
                 method: 'POST',
@@ -363,7 +364,7 @@
 
                     // Display the modal
                     $('#responseModal').modal('show');
-                    changeSubmitButtonText("Submit")
+                    changeSubmitButtonText("submit-form-ui", "Submit");
                 })
                 .catch(function (error) {
                     console.error('Error:', error);
@@ -381,12 +382,9 @@
             return extractedCode;
         }
 
-        function changeSubmitButtonText(text) {
-            let buttons = document.getElementsByClassName("submit-button");
-            for (var i = 0; i < buttons.length; i++) {
-                buttons[i].innerHTML = text;
-            }
-
+        function changeSubmitButtonText(id, text) {
+            let button = document.getElementById(id);
+            button.innerHTML = text;
         }
     </script>
 
