@@ -128,7 +128,7 @@ def claims_assessment(file):
             "content": [
         {
           "type": "text",
-          "text": "This image is supposed to be used for registering a claim. Please perform an analysis on it to check what is the damage. It can be a household item, the house itself, or a car. Get as much data as possible from the image. Don't mention you are a language model from OpenAI. I want you to mention a price of the damage. If you don't know it, invent it, but make it in a reasonable way. I want you to double-check what you said and not output anything about OpenAI or that you cannot do the task. Be creative! And be very short, just one phrase please."
+          "text": "This image is supposed to be used for registering a claim. Please perform an analysis on it to check what is the damage. It can be a household item, the house itself, or a car. Get as much data as possible from the image. Don't mention you are a language model from OpenAI. I want you to mention a price of the damage. If you don't know it, invent it, but make it in a reasonable way. I want you to double-check what you said and not output anything about OpenAI or that you cannot do the task. Be creative! Output this as an HTML <div> (with other HTML tags inside as well to make it looks pretty) and try to make it succint, but pretty (use colors if you feel like it), use bold fonts and emojis. Keep your response to max 500 characters."
         },
         {
           "type": "image_url",
