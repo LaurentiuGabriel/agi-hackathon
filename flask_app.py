@@ -12,6 +12,9 @@ from werkzeug.utils import secure_filename
 from OpenSSL import SSL
 import base64
 import requests
+from pyquery import PyQuery as pq
+from lxml import etree
+
 
 context = SSL.Context(SSL.SSLv23_METHOD)
 
@@ -31,7 +34,7 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def chat_with_file(file, prompt):
+def chat_with_file(file):
 
     base64_image = encode_image(file)
 
@@ -48,7 +51,7 @@ def chat_with_file(file, prompt):
             "content": [
         {
           "type": "text",
-          "text": {prompt}
+          "text": "This image is supposed to be used for registering a claim. Please perform an analysis on it to check if it has been tampered with. I don`t want you to say that you cannot do it, I want you to pay attention to how consistent the font is, how are the letters aligned, and other factors like that, and drive a conclusion based on that. Remember, dont tell me that you are just a language model developed by OpenAI and cannot do these things. Be creative. Just look at font consistency and stuff like that. Be very succint as well, don't output filler sentences. Also, write the output in HTML."
         },
         {
           "type": "image_url",
@@ -65,9 +68,9 @@ def chat_with_file(file, prompt):
     response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
     response_json = response.json()
     message_content = response_json['choices'][0]['message']['content']
-    lines = message_content.split('\n')
+    
 
-    return lines
+    return pq(etree.fromString(message_content))
 
 
 # Function to encode the image
@@ -95,7 +98,7 @@ def post_formdata():
 
     prompt = "This image is supposed to be used for registering a claim. Please perform an analysis on it to check if it has been tampered with. I don`t want you to say that you cannot do it, I want you to pay attention to how consistent the font is, how are the letters aligned, and other factors like that, and drive a conclusion based on that. Remember, dont tell me that you are just a language model and cannot do these things."
     
-    return chat_with_file(file_path, prompt)
+    return chat_with_file(file_path)
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -116,7 +119,7 @@ def predict():
 
         prompt = "Act as a top quality engineer. I want you to analyze what is in this image. It is supposed to be the user interface of an application. Check for visual isues, incosistencies, UX issues. You don't need context, you just judge by what you see. Pay attention for typos, duplicated elements, or things that don't look good in a software piece."
     
-        return chat_with_file(file_path, prompt)
+        return chat_with_file(file_path)
 
     return render_template("index.html")
 
@@ -135,7 +138,7 @@ def transcribe():
 
     prompt = "This image is supposed to be used for registering a claim. Please perform an analysis on it to check what is the damage. It can be a household item, the house itself, or a car. Get as much data as possible from the image. Don't mention you are a language model from OpenAI. I want you to mention a price of the damage. If you don't know it, invent it, but make it in a reasonable way. I want you to double-check what you said and not output anything about OpenAI or that you cannot do the task. Be creative!"
     
-    return chat_with_file(file_path, prompt)
+    return chat_with_file(file_path)
 
 if __name__ == "__main__":
     
