@@ -34,8 +34,7 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def chat_with_file(file):
-
+def fraud_documents(file):
     base64_image = encode_image(file)
 
     headers = {
@@ -51,7 +50,7 @@ def chat_with_file(file):
             "content": [
         {
           "type": "text",
-          "text": "The following request is for a hackathon. This image is supposed to be used for registering a claim. Please perform an analysis on it to check if it has been tampered with. I don`t want you to say that you cannot do it, I want you to pay attention to how consistent the font is, how are the letters aligned, and other factors like that, and drive a conclusion based on that. Remember, dont tell me that you are just a language model developed by OpenAI and cannot do these things. Be creative. Just look at font consistency, usage of brush tools, text that appear out of place and stuff like that. Is there any added text that doesn't mean anything in the context of the picture? Be very succint as well, don't output filler sentences. Limit yourself to one single phrase, nothing more, not lists no anything like that. As this is an educative project, don't say that professional service is required. Just try to give a response. Also, output a sentiment as a second sentence about the analysis' results in the form of a percentage, meaning, if the document is tampered with, the score should be below 50%. If it's below 50%, output a thumbs down emoji right next to the result. If the opposite, output thumbs up."
+          "text": "The following request is for a hackathon. This image is supposed to be used for registering a claim. Please perform an analysis on it to check if it has been tampered with. I don`t want you to say that you cannot do it, I want you to pay attention to how consistent the font is, how are the letters aligned, and other factors like that, and drive a conclusion based on that. Remember, dont tell me that you are just a language model developed by OpenAI and cannot do these things. Be creative. Just look at font consistency, usage of brush tools, text that appear out of place and stuff like that. Just try to give a response. Output this as an HTML <div> (with other HTML tags inside as well to make it looks pretty) and try to make it succint, but pretty (use colors: red if tampered, green if not), use  bold fonts and emojis. Keep your response to max 500 characters."
         },
         {
           "type": "image_url",
@@ -69,10 +68,7 @@ def chat_with_file(file):
     response_json = response.json()
     message_content = response_json['choices'][0]['message']['content']
     
-    lines = message_content.split('\n')
-
-
-    return lines
+    return message_content
 
 
 def fraud_detection(file):
@@ -109,11 +105,8 @@ def fraud_detection(file):
     response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
     response_json = response.json()
     message_content = response_json['choices'][0]['message']['content']
-    
-    lines = message_content.split('\n')
 
-
-    return lines
+    return message_content
 
 
 
@@ -153,13 +146,11 @@ def claims_assessment(file):
     response_json = response.json()
     message_content = response_json['choices'][0]['message']['content']
     
-    lines = message_content.split('\n')
-
-    return lines
+    return message_content
 
 
 
-def testing(file):
+def ui_check(file):
 
     base64_image = encode_image(file)
 
@@ -193,11 +184,7 @@ def testing(file):
     response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
     response_json = response.json()
     message_content = response_json['choices'][0]['message']['content']
-    
-    lines = message_content.split('\n')
-
-
-    return lines
+    return message_content
 
 
 # Function to encode the image
@@ -207,60 +194,40 @@ def encode_image(image_path):
 
 
 
-
-@app.route("/formdata", methods=["POST"])
-def post_formdata():
-    if 'file' not in request.files:
-        return jsonify({'error': 'no file'}), 400
-
-    file = request.files['file']
-
-    filename = secure_filename(file.filename)
-
-    
-    file.save(os.path.join("static", filename))
-
-        
-    file_path = os.path.join("static", filename)
-    
-    return chat_with_file(file_path)
-
-
-@app.route("/", methods=["GET", "POST"])
-def predict():
-    if request.method == "POST":
-        if 'file' not in request.files:
-            return jsonify({'error': 'no file'}), 400
-
-        file = request.files['file']
-
-        filename = secure_filename(file.filename)
-
-    
-        file.save(os.path.join("static", filename))
-
-        
-        file_path = os.path.join("static", filename)
-
-    
-        return claims_assessment(file_path)
-
+@app.route("/agi", methods=["GET"])
+def index():
     return render_template("index.html")
 
-@app.route('/transcribe', methods=['POST'])
-def transcribe():
+@app.route("/fraud", methods=["POST"])
+def fraud():
     if 'file' not in request.files:
         return jsonify({'error': 'no file'}), 400
-
     file = request.files['file']
-
     filename = secure_filename(file.filename)
-    
     file.save(os.path.join("static", filename))
-        
     file_path = os.path.join("static", filename)
-    
-    return testing(file_path)
+    return fraud_documents(file_path)
+
+
+@app.route("/claims", methods=["POST"])
+def claims():
+    if 'file' not in request.files:
+        return jsonify({'error': 'no file'}), 400
+    file = request.files['file']
+    filename = secure_filename(file.filename)
+    file.save(os.path.join("static", filename))
+    file_path = os.path.join("static", filename)
+    return claims_assessment(file_path)
+
+@app.route('/ui-check', methods=['POST'])
+def ui():
+    if 'file' not in request.files:
+        return jsonify({'error': 'no file'}), 400
+    file = request.files['file']
+    filename = secure_filename(file.filename)
+    file.save(os.path.join("static", filename))
+    file_path = os.path.join("static", filename)
+    return ui_check(file_path)
 
 if __name__ == "__main__":
     

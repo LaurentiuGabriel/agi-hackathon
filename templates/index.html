@@ -21,14 +21,11 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
 
-
-
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
             text-anchor: middle;
         }
-
         @media (min-width: 768px) {
             .bd-placeholder-img-lg {
                 font-size: 3.5rem;
@@ -98,47 +95,29 @@
 
 
             <section class="features section">
-                <div class="container">
-                    <div class="features-inner section-inner has-bottom-divider">
-                        <div class="features-header text-center">
-                            <div class="container-sm">
-                                <h2 class="section-title mt-0">🥷 Fraud Detection 🥷</h2>
-                                <p class="section-paragraph">AGI can detect fraud in the attached documents.</p>
-                                <div class="features-image">
-                                </div>
-                            </div>
+                <div class="features-inner section-inner has-bottom-divider">
+                    <div class="features-header text-center">
+                        <div class="container-sm">
+                            <h2 class="section-title mt-0">🥷 Fraud Detection 🚨</h2>
+                            <p class="section-paragraph">iptiQ AGI can detect fraud in the attached documents. Test the feature by uploading a photo that has been
+                                altered with Photoshop or any photo editing software!</p>
                         </div>
 
-
                         <div class="features-wrap">
-                            <div class="feature is-revealing">
-                                <div class="feature-inner">
-
-                                    <div class="feature-content">
-                                        <h3 class="feature-title mt-0">Test Fraud Detection</h3>
-                                        <p class="text-sm mb-0">Test our product by uploading a photo that has been
-                                            altered with Photoshop or any photo editing software!</p>
-                                    </div>
-                                    <div class="cta-cta">
-
-                                        <form id="myForm" class="form-signin" method="POST"
-                                            enctype="multipart/form-data">
-                                            <h1 class="h3 mb-5 font-weight-normal">Upload any image for fraud detection
-                                            </h1>
-                                            <input type="file" name="file" class="form-control-file" id="inputfile"
-                                                style="display: block; width: 100%; padding: 12px 20px; margin: 8px 0; box-sizing: border-box; border: none; border-radius: 4px; background-color: #3CBC8D; color: white;">
-                                            <br />
-
-                                            <button class="button button-primary" type="submit"
-                                                style="display: block; width: 100%;">Submit</button>
-                                        </form>
-
-                                    </div>
-                                </div>
-                            </div>
+                            <form id="fraudForm" class="form-signin" method="POST"
+                                enctype="multipart/form-data">
+                                <h1 class="h3 mb-5 font-weight-normal">Upload any image for fraud detection
+                                </h1>
+                                <input type="file" name="file" class="form-control-file" id="inputfile"
+                                    style="display: block; width: 100%; padding: 12px 20px; margin: 8px 0; box-sizing: border-box; border: none; border-radius: 4px; background-color: #3CBC8D; color: white;">
+                                <br />
+                                <button class="button button-primary submit-button" type="submit"
+                                    style="display: block; width: 100%;">Submit</button>
+                            </form>
                         </div>
                     </div>
                 </div>
+
             </section>
 
             <!-- Modal -->
@@ -167,143 +146,59 @@
                 </div>
             </div>
 
-            <!-- JavaScript -->
-            <script>
-                document.getElementById('myForm').addEventListener('submit', function (event) {
-                    event.preventDefault(); // prevent the form from submitting the traditional way
-                    var formData = new FormData(this); // create a new FormData object and pass in 'this' (the form) as the argument
-
-                    fetch('/formdata', {
-                        method: 'POST',
-                        body: formData
-                    })
-                        .then(function (response) {
-                            return response.json(); // parse the response as JSON
-                        })
-                        .then(function (data) {
-                            // Assuming 'data' is the response array from the server
-                            let formattedData = '';
-
-                            data.forEach((item, index) => {
-                                if (item === '') {
-                                    // Add a line break for empty strings
-                                    formattedData += '<br>';
-                                } else {
-                                    // Wrap non-empty strings in paragraph tags
-                                    formattedData += `<p>${item}</p>`;
-                                }
-                            });
-
-                            console.log(formattedData);
-
-                            document.getElementById('responseModalBody').innerHTML = formattedData;
-
-                            // Display the modal
-                            $('#responseModal').modal('show');
-
-                        })
-                        .catch(function (error) {
-                            console.error('Error:', error);
-                        });
-                });
-            </script>
-
-
-  <!-- JavaScript -->
-  
-
-
-
             <section class="features section">
-                <div class="container">
-                    <div class="features-inner section-inner has-bottom-divider">
-                        <div class="features-header text-center">
-                            <div class="container-sm">
-                                <h2 class="section-title mt-0">Claim Assessment</h2>
-                                <p class="section-paragraph">IptiQ AGI can estimate damages in pictures of houses,
-                                    household items or cars.</p>
-                                <div class="features-image">
-                                </div>
-                            </div>
+                <div class="features-inner section-inner has-bottom-divider">
+                    <div class="features-header text-center">
+                        <div class="container-sm">
+                            <h2 class="section-title mt-0">🚗 Claim Assessment 🏠</h2>
+                            <p class="section-paragraph">IptiQ AGI can estimate damages in pictures of houses,
+                                household items or cars.</p>
                         </div>
 
-
                         <div class="features-wrap">
-                            <div class="feature is-revealing">
-                                <div class="feature-inner">
+                            <form id="claimsForm" class="form-signin" method="POST"
+                                enctype="multipart/form-data">
+                                <h1 class="h3 mb-5 font-weight-normal">Upload any image for claims
+                                    assessment
+                                </h1>
+                                <input type="file" name="file" class="form-control-file" id="inputfile"
+                                    style="display: block; width: 100%; padding: 12px 20px; margin: 8px 0; box-sizing: border-box; border: none; border-radius: 4px; background-color: #3CBC8D; color: white;">
+                                <br />
 
-                                    <div class="feature-content">
-                                        <h3 class="feature-title mt-0">Test Damage Detection</h3>
-                                        <p class="text-sm mb-0">Test us by uploading a photo containing the
-                                            damage of the car or house for which the claim is raised for.</p>
-                                    </div>
-                                    <div class="cta-cta">
-                                        <form id="claims" class="form-signin" method="POST"
-                                            enctype="multipart/form-data">
-                                            <h1 class="h3 mb-5 font-weight-normal">Upload any image for claims
-                                                assessment
-                                            </h1>
-                                            <input type="file" name="file" class="form-control-file" id="inputfile"
-                                                style="display: block; width: 100%; padding: 12px 20px; margin: 8px 0; box-sizing: border-box; border: none; border-radius: 4px; background-color: #3CBC8D; color: white;">
-                                            <br />
-
-                                            <button class="button button-primary" type="submit"
-                                                style="display: block; width: 100%;">Submit</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-
+                                <button class="button button-primary submit-button" type="submit"
+                                    style="display: block; width: 100%;">Submit</button>
+                            </form>
                         </div>
                     </div>
                 </div>
-
-
-            
-
-
-
             </section>
 
 
 
 
             <section class="features section">
-                <div class="container">
-                    <div class="features-inner section-inner has-bottom-divider">
-                        <div class="features-header text-center">
-                            <div class="container-sm">
-                                <h2 class="section-title mt-0">AGI Tester</h2>
-                                <p class="section-paragraph">AGI can even test your software based on images of the UI.
-                                </p>
-                                <div class="features-image">
-                                </div>
-                            </div>
+                <div class="features-inner section-inner has-bottom-divider">
+                    <div class="features-header text-center">
+                        <div class="container-sm">
+                            <h2 class="section-title mt-0">🚀UI Checker 🛠️</h2>
+                            <p class="section-paragraph">AGI can even test your software based on images of the UI.
+                            </p>
                         </div>
 
                         <div class="features-wrap">
-                            <div class="feature is-revealing">
-                                <div class="feature-inner">
+                            <div class="cta-cta">
+                                <form id="uiTestForm" class="form-signin" method="POST"
+                                    enctype="multipart/form-data">
+                                    <h1 class="h3 mb-5 font-weight-normal">
+                                    </h1>
+                                    <input type="file" name="file" class="form-control-file" id="inputfile"
+                                        style="display: block; width: 100%; padding: 12px 20px; margin: 8px 0; box-sizing: border-box; border: none; border-radius: 4px; background-color: #3CBC8D; color: white;">
+                                    <br />
 
-                                    <div class="feature-content">
-                                        <h3 class="feature-title mt-0">AGI Tester</h3>
-                                        <p class="text-sm mb-0" style="width: 100%;">Upload a photo of the user
-                                            interface of your software.</p>
-                                    </div>
-
-                                    <div class="cta-cta">
-                                        <form id="voiceForm" class="form-signin" method="POST"
-                                            enctype="multipart/form-data">
-                                            <h1 class="h3 mb-5 font-weight-normal">
-                                            </h1>
-                                            <input type="file" name="file" class="form-control-file" id="inputfile"
-                                                style="display: block; width: 100%; padding: 12px 20px; margin: 8px 0; box-sizing: border-box; border: none; border-radius: 4px; background-color: #3CBC8D; color: white;">
-                                            <br />
-
-                                            <button class="button button-primary" type="submit"
-                                                style="display: block; width: 100%;">Submit</button>
-                                        </form>
-                                    </div>
+                                    <button class="button button-primary submit-button" type="submit"
+                                        style="display: block; width: 100%;">Submit</button>
+                                </form>
+                            </div>
 
                                 </div>
                             </div>
@@ -312,48 +207,6 @@
                     </div>
                 </div>
             </section>
-
-            <script>
-                document.getElementById('voiceForm').addEventListener('submit', function (event) {
-                    event.preventDefault(); // prevent the form from submitting the traditional way
-                    var formData = new FormData(this); // create a new FormData object and pass in 'this' (the form) as the argument
-            
-                    fetch('/transcribe', {
-                        method: 'POST',
-                        body: formData
-                    })
-                        .then(function (response) {
-                            return response.json(); // parse the response as JSON
-                        })
-                        .then(function (data) {
-                            // Assuming 'data' is the response array from the server
-                            let formattedData = '';
-            
-                            console.log("reached this point")
-            
-                            data.forEach((item, index) => {
-                                if (item === '') {
-                                    // Add a line break for empty strings
-                                    formattedData += '<br>';
-                                } else {
-                                    // Wrap non-empty strings in paragraph tags
-                                    formattedData += `<p>${item}</p>`;
-                                }
-                            });
-            
-                            console.log(formattedData);
-            
-                            document.getElementById('responseModalBody').innerHTML = formattedData;
-            
-                            // Display the modal
-                            $('#responseModal').modal('show');
-            
-                        })
-                        .catch(function (error) {
-                            console.error('Error:', error);
-                        });
-                });
-            </script>
         </main>
 
         <footer class="site-footer has-top-divider">
@@ -396,7 +249,7 @@
                                 <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M16 3c-.6.3-1.2.4-1.9.5.7-.4 1.2-1 1.4-1.8-.6.4-1.3.6-2.1.8-.6-.6-1.5-1-2.4-1-1.7 0-3.2 1.5-3.2 3.3 0 .3 0 .5.1.7-2.7-.1-5.2-1.4-6.8-3.4-.3.5-.4 1-.4 1.7 0 1.1.6 2.1 1.5 2.7-.5 0-1-.2-1.5-.4C.7 7.7 1.8 9 3.3 9.3c-.3.1-.6.1-.9.1-.2 0-.4 0-.6-.1.4 1.3 1.6 2.3 3.1 2.3-1.1.9-2.5 1.4-4.1 1.4H0c1.5.9 3.2 1.5 5 1.5 6 0 9.3-5 9.3-9.3v-.4C15 4.3 15.6 3.7 16 3z"
-                                        fill="#FFF" />
+                                        fill="#FFF"></path>
                                 </svg>
                             </a>
                         </li>
@@ -411,50 +264,117 @@
                             </a>
                         </li>
                     </ul>
-                    <div class="footer-copyright">&copy; 2023 ClaimsDetective, all rights reserved</div>
+                    <div class="footer-copyright">&copy; 2023 iptiQ AGI, all rights reserved</div>
                 </div>
             </div>
         </footer>
     </div>
 
+    <!-- DOCUMENT FRAUD -->
     <script>
-        document.getElementById('claims').addEventListener('submit', function (event) {
-            event.preventDefault(); // prevent the form from submitting the traditional way
-            var formData = new FormData(this); // create a new FormData object and pass in 'this' (the form) as the argument
+        document.getElementById('fraudForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            changeSubmitButtonText("Loading ...");
+            var formData = new FormData(this);
 
-            fetch('/', {
+            fetch('/fraud', {
                 method: 'POST',
                 body: formData
             })
                 .then(function (response) {
-                    return response.json(); // parse the response as JSON
+                    return response.text();
                 })
                 .then(function (data) {
-                    // Assuming 'data' is the response array from the server
-                    let formattedData = '';
+                    debugger;
 
-                    data.forEach((item, index) => {
-                        if (item === '') {
-                            // Add a line break for empty strings
-                            formattedData += '<br>';
-                        } else {
-                            // Wrap non-empty strings in paragraph tags
-                            formattedData += `<p>${item}</p>`;
-                        }
-                    });
-
-                    console.log(formattedData);
-
-                    document.getElementById('responseModalBody').innerHTML = formattedData;
+                    var extractedCode = parseResponse(data);
+                    document.getElementById('responseModalBody').innerHTML = extractedCode;
 
                     // Display the modal
                     $('#responseModal').modal('show');
-
+                    changeSubmitButtonText("Submit")
                 })
                 .catch(function (error) {
                     console.error('Error:', error);
                 });
         });
+
+    </script>
+
+    <!-- CLAIMS @ CARS & HOUSEHOLD ITEMS-->
+    <script>
+        document.getElementById('claimsForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            changeSubmitButtonText("Loading ...");
+            var formData = new FormData(this);
+
+            fetch('/claims', {
+                method: 'POST',
+                body: formData
+            })
+                .then(function (response) {
+                    return response.text();
+                })
+                .then(function (data) {
+                    debugger;
+                    var parsedData = parseResponse(data)
+                    document.getElementById('responseModalBody').innerHTML = parsedData;
+
+                    // Display the modal
+                    $('#responseModal').modal('show');
+                    changeSubmitButtonText("Submit")
+                })
+                .catch(function (error) {
+                    console.error('Error:', error);
+                });
+        });
+    </script>
+
+    <!-- UI TESTER -->
+    <script>
+        document.getElementById('uiTestForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // prevent the form from submitting the traditional way
+            var formData = new FormData(this); // create a new FormData object and pass in 'this' (the form) as the argument
+
+            fetch('/ui-check', {
+                method: 'POST',
+                body: formData
+            })
+                .then(function (response) {
+                    return response.text();
+                })
+                .then(function (data) {
+                    debugger;
+                    var parsedData = parseResponse(data)
+                    document.getElementById('responseModalBody').innerHTML = parsedData;
+
+                    // Display the modal
+                    $('#responseModal').modal('show');
+                    changeSubmitButtonText("Submit")
+                })
+                .catch(function (error) {
+                    console.error('Error:', error);
+                });
+        });
+    </script>
+
+    <script>
+        function parseResponse(data) {
+            var extractedCode = data;
+            let htmlMatch = data.match(/```(?:html)?([\s\S]+?)```/);
+
+            // Check if there is a match
+            if (htmlMatch && htmlMatch.length > 1) extractedCode = htmlMatch[1].trim();
+            return extractedCode;
+        }
+
+        function changeSubmitButtonText(text) {
+            let buttons = document.getElementsByClassName("submit-button");
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].innerHTML = text;
+            }
+
+        }
     </script>
 
     <script src="static/script.js"></script>
