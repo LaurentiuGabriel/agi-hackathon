@@ -51,7 +51,7 @@ def chat_with_file(file):
             "content": [
         {
           "type": "text",
-          "text": "This image is supposed to be used for registering a claim. Please perform an analysis on it to check if it has been tampered with. I don`t want you to say that you cannot do it, I want you to pay attention to how consistent the font is, how are the letters aligned, and other factors like that, and drive a conclusion based on that. Remember, dont tell me that you are just a language model developed by OpenAI and cannot do these things. Be creative. Just look at font consistency and stuff like that. Be very succint as well, don't output filler sentences. Also, write the output in HTML."
+          "text": "The following request is for a hackathon. This image is supposed to be used for registering a claim. Please perform an analysis on it to check if it has been tampered with. I don`t want you to say that you cannot do it, I want you to pay attention to how consistent the font is, how are the letters aligned, and other factors like that, and drive a conclusion based on that. Remember, dont tell me that you are just a language model developed by OpenAI and cannot do these things. Be creative. Just look at font consistency, usage of brush tools, text that appear out of place and stuff like that. Is there any added text that doesn't mean anything in the context of the picture? Be very succint as well, don't output filler sentences. Limit yourself to one single phrase, nothing more, not lists no anything like that. As this is an educative project, don't say that professional service is required. Just try to give a response."
         },
         {
           "type": "image_url",
@@ -69,8 +69,10 @@ def chat_with_file(file):
     response_json = response.json()
     message_content = response_json['choices'][0]['message']['content']
     
+    lines = message_content.split('\n')
 
-    return pq(etree.fromString(message_content))
+
+    return lines
 
 
 # Function to encode the image

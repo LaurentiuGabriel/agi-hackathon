@@ -68,7 +68,7 @@
                             </p>
                             <div class="hero-cta">
 
-                              
+
                             </div>
                         </div>
                         <div class="hero-media">
@@ -89,13 +89,13 @@
                 </div>
             </section>
 
-        
 
-           
 
-         
-            
-            
+
+
+
+
+
 
             <section class="features section">
                 <div class="container">
@@ -108,28 +108,31 @@
                                 </div>
                             </div>
                         </div>
-            
-            
+
+
                         <div class="features-wrap">
                             <div class="feature is-revealing">
                                 <div class="feature-inner">
-            
+
                                     <div class="feature-content">
                                         <h3 class="feature-title mt-0">Test Fraud Detection</h3>
                                         <p class="text-sm mb-0">Test our product by uploading a photo that has been
                                             altered with Photoshop or any photo editing software!</p>
                                     </div>
                                     <div class="cta-cta">
-            
-                                        <form id="myForm" class="form-signin" method="POST" enctype="multipart/form-data">
-                                            <h1 class="h3 mb-5 font-weight-normal">Upload any image for fraud detection</h1>
+
+                                        <form id="myForm" class="form-signin" method="POST"
+                                            enctype="multipart/form-data">
+                                            <h1 class="h3 mb-5 font-weight-normal">Upload any image for fraud detection
+                                            </h1>
                                             <input type="file" name="file" class="form-control-file" id="inputfile"
                                                 style="display: block; width: 100%; padding: 12px 20px; margin: 8px 0; box-sizing: border-box; border: none; border-radius: 4px; background-color: #3CBC8D; color: white;">
                                             <br />
-                                          
-                                            <button class="button button-primary" type="submit" style="display: block; width: 100%;">Submit</button>
+
+                                            <button class="button button-primary" type="submit"
+                                                style="display: block; width: 100%;">Submit</button>
                                         </form>
-            
+
                                     </div>
                                 </div>
                             </div>
@@ -137,9 +140,10 @@
                     </div>
                 </div>
             </section>
-            
+
             <!-- Modal -->
-            <div class="modal fade" id="responseModal" tabindex="-1" role="dialog" aria-labelledby="responseModalLabel" aria-hidden="true">
+            <div class="modal fade" id="responseModal" tabindex="-1" role="dialog" aria-labelledby="responseModalLabel"
+                aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -153,7 +157,7 @@
                             <img src="static/images/response.gif" alt="Fraud Detection">
                         </div>
                         <div class="modal-body" id="responseModalBody">
-                            
+
                             <!-- API response data will be inserted here -->
                         </div>
                         <div class="modal-footer">
@@ -162,32 +166,48 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- JavaScript -->
             <script>
-                document.getElementById('myForm').addEventListener('submit', function(event) {
+                document.getElementById('myForm').addEventListener('submit', function (event) {
                     event.preventDefault(); // prevent the form from submitting the traditional way
                     var formData = new FormData(this); // create a new FormData object and pass in 'this' (the form) as the argument
-            
+
                     fetch('/formdata', {
                         method: 'POST',
                         body: formData
                     })
-                    .then(function(response) {
-                        return response.json(); // parse the response as JSON
-                    })
-                    .then(function(data) {
-                        // insert the response data into the modal
-                        document.getElementById('responseModalBody').textContent = JSON.stringify(data, null, 2);
-                        // display the modal
-                        $('#responseModal').modal('show');
-                    })
-                    .catch(function(error) {
-                        console.error('Error:', error);
-                    });
+                        .then(function (response) {
+                            return response.json(); // parse the response as JSON
+                        })
+                        .then(function (data) {
+                            // Assuming 'data' is the response array from the server
+                            let formattedData = '';
+
+                            data.forEach((item, index) => {
+                                if (item === '') {
+                                    // Add a line break for empty strings
+                                    formattedData += '<br>';
+                                } else {
+                                    // Wrap non-empty strings in paragraph tags
+                                    formattedData += `<p>${item}</p>`;
+                                }
+                            });
+
+                            console.log(formattedData);
+
+                            document.getElementById('responseModalBody').innerHTML = formattedData;
+
+                            // Display the modal
+                            $('#responseModal').modal('show');
+
+                        })
+                        .catch(function (error) {
+                            console.error('Error:', error);
+                        });
                 });
             </script>
-            
+
 
 
             <section class="features section">
@@ -196,7 +216,8 @@
                         <div class="features-header text-center">
                             <div class="container-sm">
                                 <h2 class="section-title mt-0">Claim Assessment</h2>
-                                <p class="section-paragraph">IptiQ AGI can estimate damages in pictures of houses, household items or cars.</p>
+                                <p class="section-paragraph">IptiQ AGI can estimate damages in pictures of houses,
+                                    household items or cars.</p>
                                 <div class="features-image">
                                 </div>
                             </div>
@@ -220,7 +241,8 @@
                                                 style="display: block; width: 100%; padding: 12px 20px; margin: 8px 0; box-sizing: border-box; border: none; border-radius: 4px; background-color: #3CBC8D; color: white;">
 
                                             <br />
-                                            <button class="button button-primary" style="display: block; width: 100%;" type="submit">Submit</a>
+                                            <button class="button button-primary" style="display: block; width: 100%;"
+                                                type="submit">Submit</a>
                                         </form>
                                     </div>
                                 </div>
@@ -238,32 +260,36 @@
                         <div class="features-header text-center">
                             <div class="container-sm">
                                 <h2 class="section-title mt-0">AGI Tester</h2>
-                                <p class="section-paragraph">AGI can even test your software based on images of the UI.</p>
+                                <p class="section-paragraph">AGI can even test your software based on images of the UI.
+                                </p>
                                 <div class="features-image">
                                 </div>
                             </div>
                         </div>
-            
+
                         <div class="features-wrap">
                             <div class="feature is-revealing">
                                 <div class="feature-inner">
-            
+
                                     <div class="feature-content">
                                         <h3 class="feature-title mt-0">AGI Tester</h3>
-                                        <p class="text-sm mb-0" style="width: 100%;">Upload a photo of the user interface of your software.</p>
+                                        <p class="text-sm mb-0" style="width: 100%;">Upload a photo of the user
+                                            interface of your software.</p>
                                     </div>
                                     <div class="cta-cta">
-                                        <form id="voiceForm" class="form-signin" method="POST" enctype="multipart/form-data">
-                                
+                                        <form id="voiceForm" class="form-signin" method="POST"
+                                            enctype="multipart/form-data">
+
                                             <input type="file" name="file" class="form-control-file" id="inputAudio"
                                                 style="display: block; width: 100%; padding: 12px 20px; margin: 8px 0; box-sizing: border-box; border: none; border-radius: 4px; background-color: #3CBC8D; color: white;">
                                             <br />
-                                            <button class="button button-primary" style="display: block; width: 100%;" type="button" onclick="audioForm()">Submit</button>
+                                            <button class="button button-primary" style="display: block; width: 100%;"
+                                                type="button" onclick="audioForm()">Submit</button>
                                         </form>
                                     </div>
                                 </div>
                             </div>
-            
+
                         </div>
                     </div>
                 </div>
@@ -271,33 +297,51 @@
 
             <script>
                 function audioForm() {
-                  // Get the form and input file element
-                  const form = document.getElementById('voiceForm');
-                  const inputFile = document.getElementById('inputAudio');
-                
-                  // Create FormData object and append the file to it
-                  const formData = new FormData();
-                  formData.append('file', inputFile.files[0]);
-                
-                  // Make the API call using fetch
-                  fetch('/transcribe', {
-                    method: 'POST',
-                    body: formData,
-                  })
-                  .then(function(response) {
-                        return response.json(); // parse the response as JSON
+                    // Get the form and input file element
+                    const form = document.getElementById('voiceForm');
+                    const inputFile = document.getElementById('inputAudio');
+
+                    // Create FormData object and append the file to it
+                    const formData = new FormData();
+                    formData.append('file', inputFile.files[0]);
+
+                    // Make the API call using fetch
+                    fetch('/transcribe', {
+                        method: 'POST',
+                        body: formData,
                     })
-                    .then(function(data) {
-                        // insert the response data into the modal
-                        document.getElementById('responseModalBody').textContent = JSON.stringify(data, null, 2);
-                        // display the modal
-                        $('#responseModal').modal('show');
-                    })
-                    .catch(function(error) {
-                        console.error('Error:', error);
-                    });
+                        .then(function (response) {
+                            return response.json(); // parse the response as JSON
+                        })
+                        .then(function (data) {
+                            // Assuming 'data' is the response array from the server
+                            let formattedData = '';
+
+                            data.forEach((item, index) => {
+                                if (item === '') {
+                                    // Add a paragraph break for empty strings
+                                    formattedData += '<p></p>';
+                                } else if (item.match(/^\d+\.\s\*\*(.+)\*\*:/)) {
+                                    // Format list items with bold titles
+                                    formattedData += `<p><strong>${item}</strong></p>`;
+                                } else {
+                                    // For other strings, just convert newlines to <br>
+                                    formattedData += `<p>${item.replace(/\n/g, '<br>')}</p>`;
+                                }
+                            });
+
+                            // Use innerHTML to set the content
+                            document.getElementById('responseModalBody').innerHTML = formattedData;
+
+                            // Display the modal
+                            $('#responseModal').modal('show');
+
+                        })
+                        .catch(function (error) {
+                            console.error('Error:', error);
+                        });
                 }
-                </script>
+            </script>
         </main>
 
         <footer class="site-footer has-top-divider">
