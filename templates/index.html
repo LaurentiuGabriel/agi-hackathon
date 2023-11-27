@@ -68,6 +68,14 @@
                             </p>
                             <div class="hero-cta">
 
+                                <audio id="myAudioPlayer" controls>
+                                    <source src="static/audio.mp3" type="audio/mpeg">
+                                    Your browser does not support the audio element.
+                                </audio>
+                                
+                                <!-- Example of custom control buttons -->
+                                <button onclick="playAudio()">Play</button>
+                                <button onclick="pauseAudio()">Pause</button>
 
                             </div>
                         </div>
@@ -88,9 +96,18 @@
                     </div>
                 </div>
             </section>
+            <script>
 
-
-
+            function playAudio() {
+                var audio = document.getElementById("myAudioPlayer");
+                audio.play();
+            }
+            
+            function pauseAudio() {
+                var audio = document.getElementById("myAudioPlayer");
+                audio.pause();
+            }
+        </script>
 
 
 
@@ -219,7 +236,7 @@
                     <div class="features-inner section-inner has-bottom-divider">
                         <div class="features-header text-center">
                             <div class="container-sm">
-                                <h2 class="section-title mt-0">Claim Assessment</h2>
+                                <h2 class="section-title mt-0">🔬 Claim Assessment 🔬</h2>
                                 <p class="section-paragraph">IptiQ AGI can estimate damages in pictures of houses,
                                     household items or cars.</p>
                                 <div class="features-image">
@@ -273,7 +290,7 @@
                     <div class="features-inner section-inner has-bottom-divider">
                         <div class="features-header text-center">
                             <div class="container-sm">
-                                <h2 class="section-title mt-0">AGI Tester</h2>
+                                <h2 class="section-title mt-0">🤓 AGI Tester 🤓</h2>
                                 <p class="section-paragraph">AGI can even test your software based on images of the UI.
                                 </p>
                                 <div class="features-image">
